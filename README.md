@@ -1,71 +1,114 @@
-```markdown
-# 🚀 OnFly - Microsserviço de Viagens Corporativas
+# Backend Challenge - Onfly
 
-![Docker](https://img.shields.io/badge/Docker-OK-green?logo=docker)
-![Laravel](https://img.shields.io/badge/Laravel-12.x-orange?logo=laravel)
+Microsserviço REST em Laravel para gerenciamento de pedidos de viagem corporativa.
 
-Solução Dockerizada para gerenciamento de pedidos de viagem corporativa.
+## 🚀 Tecnologias
 
-## 📥 Download Direto
-[⬇️ Baixar README.md](https://gist.githubusercontent.com/seu-usuario/ID-DO-GIST/raw/README.md) _(substitua com seu link real)_
+- PHP 8.3
+- Laravel 11
+- MySQL
+- Docker
+- JWT (Autenticação)
+- PHPUnit
 
-## 🛠️ Instalação Rápida
+## 📋 Pré-requisitos
 
-### 1. Clone e entre na pasta
+- Docker
+- Docker Compose
+- Git
+
+## 🔧 Instalação
+
+1. Clone o repositório:
 ```bash
-git clone https://github.com/seu-usuario/onfly.git && cd onfly
+git clone https://github.com/jppb17100/onfly-teste.git
+cd onfly-teste
 ```
 
-### 2. Inicie os containers
+2. Copie o arquivo de ambiente:
 ```bash
-docker-compose up -d --build
+cp .env.example .env
 ```
 
-### 3. Comandos essenciais
+3. Gere uma nova chave JWT:
 ```bash
-# Instalar dependências
-docker-compose exec app composer install
-
-# Configurar ambiente
-docker-compose exec app cp .env.example .env
-docker-compose exec app php artisan key:generate
 docker-compose exec app php artisan jwt:secret
+```
 
-# Migrar banco de dados
+> Isso vai substituir a linha `JWT_SECRET=` no seu `.env` com uma chave válida.
+
+4. Suba os containers com Docker:
+```bash
+docker-compose up -d
+```
+
+5. Instale as dependências PHP:
+```bash
+docker-compose exec app composer install
+```
+
+6. Gere a chave da aplicação:
+```bash
+docker-compose exec app php artisan key:generate
+```
+
+7. Execute as migrações:
+```bash
 docker-compose exec app php artisan migrate
 ```
 
-## 🌐 Endpoints Principais
-| Método | Endpoint                | Descrição               |
-|--------|-------------------------|-------------------------|
-| POST   | `/api/register`         | Registrar usuário       |
-| POST   | `/api/login`            | Login (obter JWT)       |
-| POST   | `/api/travel-orders`    | Criar pedido de viagem  |
+## ✅ Testes
 
-## 🐛 Solução de Problemas
+Para rodar os testes automatizados (PHPUnit):
 
-### Erro de permissão
 ```bash
-docker-compose exec app chmod -R 775 storage bootstrap/cache
+docker-compose exec app php artisan test
 ```
 
-### Reconstruir containers
-```bash
-docker-compose down && docker-compose up -d --build
+## 🔐 Autenticação
+
+A autenticação é feita via token JWT. Após autenticar, envie o token no cabeçalho `Authorization`:
+
+```
+Authorization: Bearer {token}
 ```
 
-## 📦 Estrutura Docker
+## 🧾 Endpoints Principais
+
+- `POST /api/register` — Cadastrar novo usuário
+- `POST /api/login` — Login do usuário
+- `POST /api/travel-orders` — Criar pedido de viagem
+- `PUT /api/travel-orders/{id}/status` — Atualizar status do pedido (aprovado/cancelado)
+- `GET /api/travel-orders/{id}` — Consultar pedido específico
+- `GET /api/travel-orders` — Listar pedidos (com filtros por status, destino e datas)
+- `DELETE /api/travel-orders/{id}` — Cancelar pedido (com validações)
+
+> Cada pedido pertence ao usuário autenticado. O status só pode ser alterado por outro usuário (ex: um administrador).
+
+---
+
+Se quiser, posso gerar esse arquivo `README.md` para você baixar diretamente. Deseja isso?
+
+Perfeito! Colocar uma *collection* do Postman (ou outra ferramenta como Insomnia) facilita muito os testes da API — excelente ideia. Aqui vai como você pode atualizar o `README.md` para incluir essa informação e instruções de uso:
+
+---
+
+## 📬 Collection para Testes
+
+Para facilitar os testes da API, foi incluída uma collection do **Postman** na raiz do projeto, na pasta `collection/`.
+
+### Como usar:
+
+1. Abra o Postman.
+2. Vá em **Import**.
+3. Selecione o arquivo `collection/Onfly Travel Orders API.postman_collection.json`.
+4. A collection estará disponível com todos os endpoints organizados.
+
+> A collection já inclui os headers e exemplos de payloads. Após fazer login, copie o token JWT da resposta e substitua no header `Authorization` das próximas requisições:
 ```
-onfly/
-├── docker/
-│   ├── nginx/
-│   │   └── default.conf
-│   └── docker-compose.yml
-└── src/ (código Laravel)
+Authorization: Bearer {token}
 ```
 
-## 📌 Importante!
-1. Todas as rotas estão em `routes/web.php`
-2. CSRF desativado para rotas API
-3. Acesse o Mailhog em: http://localhost:8025
+---
 
+Se quiser, posso montar um exemplo inicial da collection também (com base nos endpoints que você já listou). Quer que eu faça isso?
