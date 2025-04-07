@@ -29,6 +29,19 @@ class TravelOrder extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function resolveRouteBinding($value, $field = null)
+    {
+        $travelOrder = $this->where($field ?? $this->getRouteKeyName(), $value)->first();
+
+        if (!$travelOrder) {
+            abort(response()->json([
+                'message' => 'Nenhuma ordem de viagem encontrada.',
+            ], 404));
+        }
+
+        return $travelOrder;
+    }
+
     public function scopeStatusFilter($query, $status)
     {
         if ($status) {

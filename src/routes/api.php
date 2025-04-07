@@ -9,7 +9,7 @@ Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 
 // Grupo para rotas autenticadas
-Route::middleware('auth:api')->group(function () {
+Route::middleware(\App\Http\Middleware\Authenticate::class)->group(function () {
     // Rotas de pedidos de viagem
 
     Route::apiResource('travel-orders', TravelOrderController::class)
@@ -23,5 +23,3 @@ Route::middleware('auth:api')->group(function () {
         [TravelOrderController::class, 'cancel'])
         ->name('travel-orders.cancel');
 });
-
-

@@ -8,8 +8,6 @@ services:
     container_name: onfly-app
     volumes:
       - ../src:/var/www/html
-      - ./supervisor/:/etc/supervisor/conf.d
-      - supervisor-run:/var/run/supervisor  # Volume dedicado para o socket
     networks:
       - onfly-network
     depends_on:
@@ -17,7 +15,7 @@ services:
       - redis
       - mailhog
     healthcheck:
-      test: [ "CMD-SHELL", "pgrep php-fpm && pgrep supervisord" ]
+      test: [ "CMD-SHELL", "pgrep php-fpm" ]  # Removida verificação do supervisord
       interval: 10s
       timeout: 5s
       retries: 3
@@ -75,7 +73,6 @@ services:
 volumes:
   dbdata:
   redisdata:
-  supervisor-run:  # Define o volume temporário
 
 networks:
   onfly-network:

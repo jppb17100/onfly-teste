@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreTravelOrderRequest;
+use App\Http\Requests\TravelOrderIndexRequest;
 use App\Http\Requests\UpdateTravelOrderRequest;
 use App\Http\Resources\TravelOrderResource;
 use App\Models\TravelOrder;
@@ -12,7 +13,6 @@ use Illuminate\Support\Facades\Gate;
 
 class TravelOrderController extends Controller
 {
-
     public function index(Request $request)
     {
         $query = $request->user()->travelOrders()
@@ -55,7 +55,6 @@ class TravelOrderController extends Controller
         return new TravelOrderResource($travel_order);
     }
 
-
     public function show(TravelOrder $travel_order)
     {
         if (!Gate::allows('view', $travel_order)) {
@@ -71,7 +70,9 @@ class TravelOrderController extends Controller
 
     public function cancel(Request $request, TravelOrder $travel_order)
     {
-        $this->authorize('cancel', $travel_order);
+        if (!Gate::allows('cancel', $travel_order)) {
+            abort(403, 'Ação não autorizada');
+        }
 
         if ($travel_order->status !== 'aprovado') {
             return response()->json(['error' => 'Só é possível cancelar pedidos aprovados'], 400);

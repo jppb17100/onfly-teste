@@ -9,14 +9,6 @@ use Illuminate\Auth\Access\Response;
 class TravelOrderPolicy
 {
     /**
-     * Determine whether the user can view any models.
-     */
-    public function viewAny(User $user): bool
-    {
-        return false;
-    }
-
-    /**
      * Determine whether the user can view the model.
      */
     public function view(User $user, TravelOrder $travelOrder): bool
@@ -47,27 +39,9 @@ class TravelOrderPolicy
         return $user->id !== $travelOrder->user_id;
     }
 
-    /**
-     * Determine whether the user can delete the model.
-     */
-    public function delete(User $user, TravelOrder $travelOrder): bool
+    public function cancel(User $user, TravelOrder $travelOrder)
     {
-        return false;
-    }
-
-    /**
-     * Determine whether the user can restore the model.
-     */
-    public function restore(User $user, TravelOrder $travelOrder): bool
-    {
-        return false;
-    }
-
-    /**
-     * Determine whether the user can permanently delete the model.
-     */
-    public function forceDelete(User $user, TravelOrder $travelOrder): bool
-    {
-        return false;
+        // Apenas usuários diferentes podem atualizar o status
+        return $user->id !== $travelOrder->user_id;
     }
 }

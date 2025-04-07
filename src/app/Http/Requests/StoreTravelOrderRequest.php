@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class StoreTravelOrderRequest extends FormRequest
 {
@@ -36,5 +38,13 @@ class StoreTravelOrderRequest extends FormRequest
             'after_or_equal' => 'A data de início deve ser hoje ou no futuro',
             'after'          => 'A data final deve ser após a data inicial'
         ];
+    }
+
+
+    protected function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException(response()->json([
+            'errors'  => $validator->errors()->first()
+        ], 422));
     }
 }

@@ -3,7 +3,9 @@
 namespace App\Http\Requests;
 
 use App\Rules\ValidOrderStatusTransition;
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class UpdateTravelOrderRequest extends FormRequest
 {
@@ -25,5 +27,22 @@ class UpdateTravelOrderRequest extends FormRequest
         return [
             'status' => 'required|in:aprovado,cancelado'
         ];
+    }
+
+    public function messages()
+    {
+        return [
+            'status.required' => 'O campo status é obrigatório.',
+            'status.string'   => 'O status deve ser um texto.',
+            'status.in'       => 'Status inválido. Os valores permitidos são: aprovado ou cancelado.',
+        ];
+    }
+
+
+    protected function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException(response()->json([
+            'message' => $validator->errors()->first()
+        ], 422));
     }
 }
