@@ -31,7 +31,11 @@ cd src
 cp .env.example .env
 ```
 
-3. Gere uma nova chave JWT:
+3. Instale as dependências PHP:
+```bash
+docker-compose exec app composer install
+```
+4. Gere uma nova chave JWT:
 ```bash
 cd ..
 cd docker
@@ -40,22 +44,17 @@ docker-compose exec app php artisan jwt:secret
 
 > Isso vai substituir a linha `JWT_SECRET=` no seu `.env` com uma chave válida.
 
-4. Suba os containers com Docker:
+5. Suba os containers com Docker:
 ```bash
 docker-compose up -d
 ```
 
-5. Instale as dependências PHP:
-```bash
-docker-compose exec app composer install
-```
-
-6. Gere a chave da aplicação:
+7. Gere a chave da aplicação:
 ```bash
 docker-compose exec app php artisan key:generate
 ```
 
-7. Execute as migrações:
+8. Execute as migrações:
 ```bash
 docker-compose exec app php artisan migrate
 ```
