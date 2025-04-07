@@ -87,12 +87,6 @@ Authorization: Bearer {token}
 
 ---
 
-Se quiser, posso gerar esse arquivo `README.md` para você baixar diretamente. Deseja isso?
-
-Perfeito! Colocar uma *collection* do Postman (ou outra ferramenta como Insomnia) facilita muito os testes da API — excelente ideia. Aqui vai como você pode atualizar o `README.md` para incluir essa informação e instruções de uso:
-
----
-
 ## 📬 Collection para Testes
 
 Para facilitar os testes da API, foi incluída uma collection do **Postman** na raiz do projeto, na pasta `collection/`.
@@ -108,7 +102,3 @@ Para facilitar os testes da API, foi incluída uma collection do **Postman** na 
 ```
 Authorization: Bearer {token}
 ```
-
----
-
-Se quiser, posso montar um exemplo inicial da collection também (com base nos endpoints que você já listou). Quer que eu faça isso?
