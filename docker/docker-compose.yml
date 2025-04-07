@@ -1,0 +1,85 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: php/Dockerfile
+    container_name: onfly-app
+    volumes:
+      - ../src:/var/www/html
+      - ./supervisor/:/etc/supervisor/conf.d
+      - supervisor-run:/var/run/supervisor  # Volume dedicado para o socket
+    networks:
+      - onfly-network
+    depends_on:
+      - db
+      - redis
+      - mailhog
+    healthcheck:
+      test: [ "CMD-SHELL", "pgrep php-fpm && pgrep supervisord" ]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  webserver:
+    image: nginx:alpine
+    container_name: onfly-webserver
+    ports:
+      - "8000:80"
+    volumes:
+      - ../src:/var/www/html
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+    networks:
+      - onfly-network
+    depends_on:
+      - app
+
+  db:
+    image: mysql:8.0
+    container_name: onfly-db
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: onfly
+      MYSQL_USER: onfly
+      MYSQL_PASSWORD: secret
+    ports:
+      - "3306:3306"
+    volumes:
+      - dbdata:/var/lib/mysql
+    networks:
+      - onfly-network
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      timeout: 20s
+      retries: 10
+
+  redis:
+    image: redis:alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redisdata:/data
+    networks:
+      - onfly-network
+
+  mailhog:
+    image: mailhog/mailhog
+    container_name: mailhog
+    ports:
+      - "1025:1025" # SMTP
+      - "8025:8025" # Web UI
+    networks:
+      - onfly-network
+
+volumes:
+  dbdata:
+  redisdata:
+  supervisor-run:  # Define o volume temporário
+
+networks:
+  onfly-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
