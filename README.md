@@ -27,30 +27,33 @@ cd onfly-teste
 
 2. Copie o arquivo de ambiente:
 ```bash
+cd src
 cp .env.example .env
 ```
 
-3. Gere uma nova chave JWT:
+3. Instale as dependências PHP:
 ```bash
-docker-compose exec app php artisan jwt:secret
+composer install
 ```
+
+4. Gere a chave da aplicação:
+```bash
+php artisan key:generate
+```
+
+```
+6. Gere uma nova chave JWT:
+```bash
+app php artisan jwt:secret
+```
+
+5. Suba os containers com Docker:
+```bash
+cd ..
+cd docker
+docker-compose up -d
 
 > Isso vai substituir a linha `JWT_SECRET=` no seu `.env` com uma chave válida.
-
-4. Suba os containers com Docker:
-```bash
-docker-compose up -d
-```
-
-5. Instale as dependências PHP:
-```bash
-docker-compose exec app composer install
-```
-
-6. Gere a chave da aplicação:
-```bash
-docker-compose exec app php artisan key:generate
-```
 
 7. Execute as migrações:
 ```bash
@@ -72,19 +75,6 @@ A autenticação é feita via token JWT. Após autenticar, envie o token no cabe
 ```
 Authorization: Bearer {token}
 ```
-
-## 🧾 Endpoints Principais
-
-- `POST /api/register` — Cadastrar novo usuário
-- `POST /api/login` — Login do usuário
-- `POST /api/travel-orders` — Criar pedido de viagem
-- `PUT /api/travel-orders/{id}/status` — Atualizar status do pedido (aprovado/cancelado)
-- `GET /api/travel-orders/{id}` — Consultar pedido específico
-- `GET /api/travel-orders` — Listar pedidos (com filtros por status, destino e datas)
-- `DELETE /api/travel-orders/{id}` — Cancelar pedido (com validações)
-
-> Cada pedido pertence ao usuário autenticado. O status só pode ser alterado por outro usuário (ex: um administrador).
-
 ---
 ## 📫 Visualizar Notificações por E-mail
 O projeto utiliza o MailHog para capturar os e-mails enviados pela aplicação durante o desenvolvimento. Para visualizar os e-mails:
@@ -98,6 +88,18 @@ Lá você poderá ver notificações como confirmações, avisos e mensagens de 
 ## 📬 Collection para Testes
 
 Para facilitar os testes da API, foi incluída uma collection do **Postman** na raiz do projeto, na pasta `collection/`.
+
+### Endpoints Principais
+
+- `POST /api/register` — Cadastrar novo usuário
+- `POST /api/login` — Login do usuário
+- `POST /api/travel-orders` — Criar pedido de viagem
+- `PUT /api/travel-orders/{id}/status` — Atualizar status do pedido (aprovado/cancelado)
+- `GET /api/travel-orders/{id}` — Consultar pedido específico
+- `GET /api/travel-orders` — Listar pedidos (com filtros por status, destino e datas)
+- `DELETE /api/travel-orders/{id}` — Cancelar pedido (com validações)
+
+> Cada pedido pertence ao usuário autenticado. O status só pode ser alterado por outro usuário (ex: um administrador).
 
 ### Como usar:
 
