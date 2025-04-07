@@ -86,7 +86,7 @@ Authorization: Bearer {token}
 > Cada pedido pertence ao usuário autenticado. O status só pode ser alterado por outro usuário (ex: um administrador).
 
 ---
-📫 Visualizar Notificações por E-mail
+## 📫 Visualizar Notificações por E-mail
 O projeto utiliza o MailHog para capturar os e-mails enviados pela aplicação durante o desenvolvimento. Para visualizar os e-mails:
 
 👉 Acesse: http://localhost:8025
