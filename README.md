@@ -27,11 +27,14 @@ cd onfly-teste
 
 2. Copie o arquivo de ambiente:
 ```bash
+cd src
 cp .env.example .env
 ```
 
 3. Gere uma nova chave JWT:
 ```bash
+cd ..
+cd docker
 docker-compose exec app php artisan jwt:secret
 ```
 
