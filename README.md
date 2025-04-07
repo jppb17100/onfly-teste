@@ -75,19 +75,6 @@ A autenticação é feita via token JWT. Após autenticar, envie o token no cabe
 ```
 Authorization: Bearer {token}
 ```
-
-## 🧾 Endpoints Principais
-
-- `POST /api/register` — Cadastrar novo usuário
-- `POST /api/login` — Login do usuário
-- `POST /api/travel-orders` — Criar pedido de viagem
-- `PUT /api/travel-orders/{id}/status` — Atualizar status do pedido (aprovado/cancelado)
-- `GET /api/travel-orders/{id}` — Consultar pedido específico
-- `GET /api/travel-orders` — Listar pedidos (com filtros por status, destino e datas)
-- `DELETE /api/travel-orders/{id}` — Cancelar pedido (com validações)
-
-> Cada pedido pertence ao usuário autenticado. O status só pode ser alterado por outro usuário (ex: um administrador).
-
 ---
 ## 📫 Visualizar Notificações por E-mail
 O projeto utiliza o MailHog para capturar os e-mails enviados pela aplicação durante o desenvolvimento. Para visualizar os e-mails:
@@ -101,6 +88,18 @@ Lá você poderá ver notificações como confirmações, avisos e mensagens de 
 ## 📬 Collection para Testes
 
 Para facilitar os testes da API, foi incluída uma collection do **Postman** na raiz do projeto, na pasta `collection/`.
+
+### Endpoints Principais
+
+- `POST /api/register` — Cadastrar novo usuário
+- `POST /api/login` — Login do usuário
+- `POST /api/travel-orders` — Criar pedido de viagem
+- `PUT /api/travel-orders/{id}/status` — Atualizar status do pedido (aprovado/cancelado)
+- `GET /api/travel-orders/{id}` — Consultar pedido específico
+- `GET /api/travel-orders` — Listar pedidos (com filtros por status, destino e datas)
+- `DELETE /api/travel-orders/{id}` — Cancelar pedido (com validações)
+
+> Cada pedido pertence ao usuário autenticado. O status só pode ser alterado por outro usuário (ex: um administrador).
 
 ### Como usar:
 
