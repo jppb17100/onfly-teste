@@ -46,13 +46,20 @@ php artisan key:generate
 php artisan jwt:secret
 ```
 
+**⚠️ Observação:**  
+Se aparecer a mensagem:
+```
+This will invalidate all existing tokens. Are you sure you want to override the secret key? (yes/no) [no]:
+```
+Digite `yes` e pressione Enter para continuar.
+> Isso vai substituir a linha `JWT_SECRET=` no seu `.env` com uma chave válida.
+
+
 6. Suba os containers com Docker:
 ```bash
 cd ..
 cd docker
 docker-compose up -d
-
-> Isso vai substituir a linha `JWT_SECRET=` no seu `.env` com uma chave válida.
 ```
 
 7. Execute as migrações:
