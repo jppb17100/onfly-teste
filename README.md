@@ -43,7 +43,7 @@ php artisan key:generate
 
 5. Gere uma nova chave JWT:
 ```bash
-app php artisan jwt:secret
+php artisan jwt:secret
 ```
 
 6. Suba os containers com Docker:
