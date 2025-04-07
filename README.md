@@ -33,7 +33,7 @@ cp .env.example .env
 
 3. Instale as dependências PHP:
 ```bash
-docker-compose exec app composer install
+composer install
 ```
 4. Gere uma nova chave JWT:
 ```bash
