@@ -41,17 +41,17 @@ composer install
 php artisan key:generate
 ```
 
+```
+6. Gere uma nova chave JWT:
+```bash
+app php artisan jwt:secret
+```
+
 5. Suba os containers com Docker:
 ```bash
 cd ..
 cd docker
 docker-compose up -d
-
-```
-6. Gere uma nova chave JWT:
-```bash
-docker-compose exec app php artisan jwt:secret
-```
 
 > Isso vai substituir a linha `JWT_SECRET=` no seu `.env` com uma chave válida.
 
