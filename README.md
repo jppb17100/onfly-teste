@@ -38,7 +38,7 @@ composer install
 
 4. Gere a chave da aplicação:
 ```bash
-docker-compose exec app php artisan key:generate
+php artisan key:generate
 ```
 
 5. Gere uma nova chave JWT:
