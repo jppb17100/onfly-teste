@@ -41,7 +41,6 @@ composer install
 php artisan key:generate
 ```
 
-```
 6. Gere uma nova chave JWT:
 ```bash
 app php artisan jwt:secret
